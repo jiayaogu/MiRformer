@@ -212,18 +212,6 @@ class RNAHybrid_scorer():
                 n_done += BATCH_SIZE
         return np.asarray(scores)
 
-# class miRBind_scorer():
-#     def __init__(self):
-#         self.mirbind_encoder = get_encoder("miRBind_Klimentova2022")
-#         self.mirbind_decoder = get_predictor("miRBind_Klimentova2022")
-#         self.mirbind_decoder.to(DEVICE)
-    
-#     def score_batch(self, batch, mirna_col, mrna_col):
-#         embeddings = self.mirbind_encoder(batch, miRNA_col=mirna_col, gene_col=mrna_col)
-#         embeddings = embeddings.to(DEVICE)
-#         scores = self.mirbind_decoder(embeddings)
-#         return scores.detach().cpu().numpy()
-
 def make_random_mirna(target, mirna_len=22):
     """
     Create a random miRNA that does not contain any seed matches to the target mRNA.
@@ -302,9 +290,8 @@ def main():
     discriminator_scorer = Discriminator_scorer()
     rnacofold_scorer = RNACofold_scorer()
     rnahybrid_scorer = RNAHybrid_scorer()
-    # mirbind_scorer = miRBind_scorer()
     
-    scorers = {"Discriminator": discriminator_scorer, "RNACofold": rnacofold_scorer, "RNAHybrid": rnahybrid_scorer}#, "miRBind": mirbind_scorer}
+    scorers = {"Discriminator": discriminator_scorer, "RNACofold": rnacofold_scorer, "RNAHybrid": rnahybrid_scorer}
 
     # ─── Score datasets ────────────────────────────────────────────────────────────
     results = {dataset_name: {scorer_name: [] for scorer_name in scorers.keys()} for dataset_name in datasets.keys()}
