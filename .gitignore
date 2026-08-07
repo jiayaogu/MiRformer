@@ -48,6 +48,9 @@ Pooling_Method_Exact_match_rate.csv
 Pooling_Method_F1_score.csv
 Pooling_Method_Eval_loss.csv
 
+#environment
+mirbench_venv/
+
 #other
 build_dataset_output.txt
 dmiso_pairs.txt

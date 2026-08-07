@@ -65,36 +65,36 @@ if __name__ == "__main__":
     save_path = os.path.join(PROJ_HOME, "Manakov2022/benchmark_mirarchitect_off_targets.tsv.gz")
 
     # ── Load data ───────────────────────────────────────────────────────────────────
-    # benchmark_mirarchitect_df = pd.read_csv(benchmark_mirarchitect_path)
-    # off_target_pool = pd.read_csv(off_target_pool_path, sep='\t', compression='gzip')
+    benchmark_mirarchitect_df = pd.read_csv(benchmark_mirarchitect_path)
+    off_target_pool = pd.read_csv(off_target_pool_path, sep='\t', compression='gzip')
 
-    # # ── Find off-targets ────────────────────────────────────────────────────────────
-    # off_target_dict = {"gene": [], "off_target_gene": [], "noncodingRNA": [], "generated_mirna": []}
-    # rng = random.Random(OFF_TARGET_RNG_SEED)
-    # for i, row in benchmark_mirarchitect_df.iterrows():
-    #     noncodingRNA = row['noncodingRNA']
-    #     generated_mirna = row['generated_mirna']
-    #     seed_region = noncodingRNA[1:8]
-    #     seed_region_rc = reverse_complement(seed_region)
-    #     target_gene = row["gene"]
-    #     gene_cluster_ID = row["gene_cluster_ID"]
-    #     off_targets = find_seed_matched_off_targets(
-    #         target_seed_region=seed_region_rc,
-    #         test_mrnas_df=off_target_pool,
-    #         target_genes=[target_gene],
-    #         target_clusters=[gene_cluster_ID],
-    #         max_samples=K_OFF,
-    #         rng=rng,
-    #     )
-    #     print(f"Found {len(off_targets)} off-targets for {noncodingRNA}")
-    #     for off_target in off_targets:
-    #         off_target_dict["gene"].append(target_gene)
-    #         off_target_dict["off_target_gene"].append(off_target)
-    #         off_target_dict["noncodingRNA"].append(noncodingRNA)
-    #         off_target_dict["generated_mirna"].append(generated_mirna)
-    # off_target_df = pd.DataFrame(off_target_dict)
-    # off_target_df.to_csv(save_path, sep="\t", compression="gzip", index=False)
-    # print(f"Off-targets saved to {save_path}")
+    # ── Find off-targets ────────────────────────────────────────────────────────────
+    off_target_dict = {"gene": [], "off_target_gene": [], "noncodingRNA": [], "generated_mirna": []}
+    rng = random.Random(OFF_TARGET_RNG_SEED)
+    for i, row in benchmark_mirarchitect_df.iterrows():
+        noncodingRNA = row['noncodingRNA']
+        generated_mirna = row['generated_mirna']
+        seed_region = noncodingRNA[1:8]
+        seed_region_rc = reverse_complement(seed_region)
+        target_gene = row["gene"]
+        gene_cluster_ID = row["gene_cluster_ID"]
+        off_targets = find_seed_matched_off_targets(
+            target_seed_region=seed_region_rc,
+            test_mrnas_df=off_target_pool,
+            target_genes=[target_gene],
+            target_clusters=[gene_cluster_ID],
+            max_samples=K_OFF,
+            rng=rng,
+        )
+        print(f"Found {len(off_targets)} off-targets for {noncodingRNA}")
+        for off_target in off_targets:
+            off_target_dict["gene"].append(target_gene)
+            off_target_dict["off_target_gene"].append(off_target)
+            off_target_dict["noncodingRNA"].append(noncodingRNA)
+            off_target_dict["generated_mirna"].append(generated_mirna)
+    off_target_df = pd.DataFrame(off_target_dict)
+    off_target_df.to_csv(save_path, sep="\t", compression="gzip", index=False)
+    print(f"Off-targets saved to {save_path}")
 
     # read in the off_target dataset and the mirarchitect dataset
     off_target_df = pd.read_csv(save_path, sep='\t', compression='gzip')

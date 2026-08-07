@@ -121,6 +121,8 @@ class SpecificityDataset(Dataset):
         mirna_ids, mirna_mask = self._encode_seq(row["noncodingRNA"], self.mirna_max_len)
 
         # K negative mRNAs (random from pool, excluding the target)
+        # TODO: should sample negative mRNAs that pair with the same miRNA family, ensuring the same binding site
+        # with the positive pair.
         target_gene = str(row["gene"])
         neg_ids_list, neg_mask_list = [], []
         candidates = [g for g in random.sample(self.neg_genes, min(self.K * 2, len(self.neg_genes)))

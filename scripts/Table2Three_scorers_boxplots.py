@@ -15,7 +15,7 @@ from Global_parameters import PROJ_HOME, AXIS_FONT_SIZE, TICK_FONT_SIZE, TITLE_F
 gill_sans_font = font_manager.FontProperties(family='Gill Sans')
 plt.rcParams['font.family'] = gill_sans_font.get_name()
 
-DATASET_NAMES = ['real_miRNA_target_mRNA', 'generated_miRNA_target_mRNA', 'generated_miRNA_off_target_mRNA', 'random_miRNA_target_mRNA']
+DATASET_NAMES = ['observed_miRNA_target_mRNA', 'generated_miRNA_target_mRNA', 'generated_miRNA_off_target_mRNA', 'random_miRNA_target_mRNA']
 SCORE_TYPES = ['Discriminator', 'RNACofold', 'RNAHybrid']
 SCORE_LABELS = ['Binding probability', 'Delta G (kcal/mol)', 'Minimum free energy (kcal/mol)']
 DATASET_COLORS = list(plt.get_cmap("Set2").colors[:len(DATASET_NAMES)])
