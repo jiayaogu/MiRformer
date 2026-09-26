@@ -51,6 +51,9 @@ Pooling_Method_Eval_loss.csv
 #environment
 mirbench_venv/
 
+# RNAHybrid and RNACofold data
+*.ps
+
 #other
 build_dataset_output.txt
 dmiso_pairs.txt
