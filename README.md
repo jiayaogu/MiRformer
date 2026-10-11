@@ -2,6 +2,66 @@
 
 This repository contains the code for `MiRformer`, a deep learning model for predicting miRNA-mRNA interactions using dual-transformer encoder architecture.
 
+## Installation
+
+MiRformer uses a conda environment named `SpeciMiR`. The environment is Python 3.10.16 with PyTorch 2.5.1 built for CUDA 12.4. Install [Miniconda or Anaconda](https://docs.conda.io/en/latest/miniconda.html) first, and use an NVIDIA driver that supports CUDA 12.4.
+
+Create and activate the environment:
+
+```bash
+conda create -n SpeciMiR python=3.10.16 -y
+conda activate SpeciMiR
+```
+
+Install PyTorch, torchvision, the CUDA 12.4 runtime, and Captum from the pytorch channel:
+
+```bash
+conda install -y -c pytorch -c nvidia \
+    pytorch==2.5.1 \
+    torchvision==0.20.1 \
+    pytorch-cuda=12.4 \
+    captum==0.8.0
+```
+
+Install ViennaRNA 2.4.7. The `py27_2` build depends only on `libgcc` and supplies the `RNAfold`, `RNAcofold`, and `RNAduplex` binaries used by the thermodynamic scoring scripts:
+
+```bash
+conda install -y -c bioconda -c conda-forge viennarna=2.4.7=py27_2
+```
+
+Install the remaining Python packages. These are the versions of the packages listed in `requirements.txt` and `torch-req.txt`, plus libraries imported by the training and plotting scripts (`wandb`, `seaborn`, `datasets`, and `logomaker`):
+
+```bash
+pip install \
+    triton==3.1.0 \
+    einops==0.8.0 \
+    biopython==1.79 \
+    "transformers==4.26.1" \
+    omegaconf==2.3.0 \
+    scikit-learn==1.6.1 \
+    numpy==1.26.4 \
+    pandas==2.2.3 \
+    matplotlib==3.10.6 \
+    deeplift==0.6.13.0 \
+    shap==0.46.0 \
+    scipy==1.15.1 \
+    wandb==0.19.6 \
+    seaborn==0.13.2 \
+    datasets==3.5.1 \
+    logomaker==0.8.6
+```
+
+`biopython` is pinned to 1.79 because several scripts import `Bio.pairwise2`.
+
+Check that PyTorch sees CUDA 12.4 and that the ViennaRNA binaries are on `PATH`:
+
+```bash
+python -c "import torch; print(torch.__version__, torch.version.cuda)"
+which RNAfold RNAcofold RNAduplex
+```
+
+Activate `SpeciMiR` before the commands below.
+
 ## Command-line Usage
 
 The main entry point for training and evaluation is `scripts/DTEA_model.py`.
